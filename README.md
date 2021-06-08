@@ -38,7 +38,7 @@ c)Go to resources module target folder.
 **RUN The Project.** \
  java -jar resources-0.0.1-SNAPSHOT.jar note:(Check the execute permission)
  Or Use docker build to run docker images
- docker run -d -p 8088:8088 swaggerapp \
+ docker run -d -p 8080:8080 swaggerapp \
 
 
 

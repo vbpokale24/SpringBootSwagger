@@ -13,6 +13,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<sleuth.version>2.0.4.RELEASE</sleuth.version>
+		 <docker.image.prefix>springboot</docker.image.prefix>
+        <docker.image.name>swaggerapp</docker.image.name>
+        <dockerDirectory>${project.basedir}</dockerDirectory>
 	</properties>
 	<artifactId>resources</artifactId>
 
@@ -84,8 +87,114 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+			</plugin>			
+			 <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.33.0</version>
+                <configuration>
+                <!-- <registry>https://registry.hub.docker.com</registry> -->
+                <!-- I think it's not necessary, plugin use the creds from docker config.json -->
+               <!--  <authConfig>
+                    <username>pokalevb24</username>
+                    <password></password>
+                </authConfig> -->
+<!--                    <dockerHost>unix:///var/run/docker.sock</dockerHost>-->
+                    <verbose>true</verbose>
+                    <images>
+                        <image>
+                            <name>${docker.image.name}</name>
+                            <build>
+                                <dockerFileDir>${project.basedir}</dockerFileDir>
+                                <!--copies artficact to docker build dir in target-->
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <tags>
+                                    <!-- <tag>lat</tag> -->
+                                </tags>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                           <!-- <goal>push</goal> -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
+	
+	
+<!-- 	<distributionManagement>
+        <repository>
+            <id>pokalevb24</id>
+            <name>vaibhav</name>
+            <uniqueVersion>false</uniqueVersion>
+            <layout>legacy</layout>
+            <url>https://index.docker.io/v1/</url>
+        </repository>
+    </distributionManagement> -->
+
+<!-- <profiles>
+   <profile>
+      <activation>
+         <property>
+            <name>docker</name>
+         </property>
+      </activation>
+      <build>
+         <plugins>
+            <plugin>
+               <groupId>io.fabric8</groupId>
+               <artifactId>docker-maven-plugin</artifactId>
+               <version>0.26.0</version>
+               <extensions>true</extensions>
+               <configuration>
+                  <verbose>true</verbose>
+                  <dockerDirectory>${project.basedir}</dockerDirectory>
+                  <images>
+                     <image>
+                        <name>${docker.image.prefix}/${docker.image.name}</name>
+                        <build>
+                           <from>java:8-jdk-alpine</from>
+                           <entryPoint>
+                              <exec>
+                                 <args>java</args>
+                                 <args>-jar</args>
+                                 <args>/maven/${project.artifactId}-${project.version}.jar</args>
+                              </exec>
+                           </entryPoint>
+                           <assembly>
+                              <descriptorRef>artifact</descriptorRef>
+                           </assembly>
+                        </build>
+                     </image>
+                  </images>
+               </configuration>
+               <executions>
+                  <execution>
+                     <id>build</id>
+                     <phase>post-integration-test</phase>
+                     <goals>
+                        <goal>build</goal>
+                     </goals>
+                  </execution>
+               </executions>
+            </plugin>
+         </plugins>
+      </build>
+   </profile>
+</profiles>
+ -->
+
+
+
 
 </project>

@@ -16,6 +16,7 @@ import com.org.persistence.repository.PersonRepository;
 import com.org.service.business.utils.MapSourceObjectToTargetObject;
 import com.org.service.model.PersonResourceModel;
 import com.org.testHelper.ReadObjectFromFile;
+import com.org.service.business.utils.PopulateHref;
 
 @RunWith(SpringRunner.class)
 public class CreatePersonServiceTest {
@@ -29,6 +30,9 @@ public class CreatePersonServiceTest {
 	@Mock
 	private PersonRepository personRepository;
 	
+	@Mock
+	PopulateHref populateHref;
+		
 	Person personRequestPayloadDB;
 	
 	PersonResourceModel personGetPayload;

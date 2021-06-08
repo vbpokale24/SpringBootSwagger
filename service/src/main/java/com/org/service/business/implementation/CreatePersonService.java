@@ -9,6 +9,7 @@ import com.org.persistence.model.Person;
 import com.org.persistence.repository.PersonRepository;
 import com.org.service.business.interfaces.ICreatePersonService;
 import com.org.service.business.utils.MapSourceObjectToTargetObject;
+import com.org.service.business.utils.PopulateHref;
 import com.org.service.model.PersonResourceModel;
 import com.org.service.model.PersonState;
 
@@ -23,13 +24,18 @@ public class CreatePersonService implements ICreatePersonService{
 	@Autowired
 	PersonRepository personRepository;
 	
+	@Autowired
+	PopulateHref populateHref;
+	
 	@Override
 	public PersonResourceModel addPerson(PersonResourceModel person) {
 		person.setState(PersonState.ADDED.toString());
 		Person personDTO = mapSourceObjectToTargetObject.mapResource(person, Person.class);
 		Person personResult = personRepository.save(personDTO);
 		Logger.info("Person data saved successfully");
-		return  mapSourceObjectToTargetObject.mapResource(personResult, PersonResourceModel.class);
+		PersonResourceModel personresource  = mapSourceObjectToTargetObject.mapResource(personResult, PersonResourceModel.class);
+		populateHref.buildHref(personresource);
+		return personresource;
 	}
 
 }

@@ -30,12 +30,15 @@ Do maven build on parent folder.
 a)Go to cmd ->go to folder_name of project\
 
 b)Type mvn clean install or mvn install \
+  For docker build :: mvn --settings settings1.xml clean install docker:build
  note::(Need to set maven home first if installing mvn)
  
 c)Go to resources module target folder.
 
 **RUN The Project.** \
- java -jar resources-0.0.1-SNAPSHOT.jar note:(Check the execute permission)\
+ java -jar resources-0.0.1-SNAPSHOT.jar note:(Check the execute permission)
+ Or Use docker build to run docker images
+ docker run -d -p 8088:8088 swaggerapp \
 
 
 

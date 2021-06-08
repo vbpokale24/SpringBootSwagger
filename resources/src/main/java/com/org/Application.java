@@ -14,7 +14,7 @@ import org.springframework.web.servlet.handler.MappedInterceptor;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.org.*"})
+//@ComponentScan(basePackages = {"com.org.*"})
 @EnableAspectJAutoProxy
 //@EnableAutoConfiguration
 @Import(SwaggerConfig.class)

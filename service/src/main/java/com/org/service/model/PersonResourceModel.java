@@ -5,19 +5,29 @@ import java.util.List;
 public class PersonResourceModel {
 
 	private Integer id;
-	
+
 	private String firstName;
 
 	private String lastName;
-	
+
 	private String age;
-	
+
 	private String favouriteColor;
-	
+
 	List<String> hobby;
-	
+
 	private String state;
-	
+
+	private String href;
+
+	public String getHref() {
+		return href;
+	}
+
+	public void setHref(String href) {
+		this.href = href;
+	}
+
 	public String getState() {
 		return state;
 	}
